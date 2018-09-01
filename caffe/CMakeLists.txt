@@ -3,11 +3,14 @@ project(caffe-classifier)
 
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(CUDA REQUIRED)
+option(CPU_ONLY "CpuOnly" OFF)
+
+if (NOT CPU_ONLY)
+	find_package(CUDA REQUIRED)
+endif (NOT CPU_ONLY)
+
 find_package(OpenCV REQUIRED)
 find_package(Caffe REQUIRED)
-
-find_package(Caffe)
 include_directories(${Caffe_INCLUDE_DIRS})
 add_definitions(${Caffe_DEFINITIONS})
 

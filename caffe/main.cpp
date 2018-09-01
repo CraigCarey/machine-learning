@@ -44,7 +44,7 @@ Classifier::Classifier(const std::string &model_file,
 {
 
 #ifdef CPU_ONLY
-	Caffe::set_mode(Caffe::CPU);
+	caffe::Caffe::set_mode(caffe::Caffe::CPU);
 #else
 	caffe::Caffe::set_mode(caffe::Caffe::GPU);
 #endif

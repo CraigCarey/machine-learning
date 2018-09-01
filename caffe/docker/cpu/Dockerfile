@@ -1,4 +1,4 @@
-FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
+FROM ubuntu:16.04
 
 RUN set -eux; \
 	apt-get update; \
@@ -31,18 +31,13 @@ WORKDIR $CAFFE_ROOT
 ENV CLONE_TAG=1.0
 
 RUN set -eux; \
-	git clone https://github.com/NVIDIA/nccl.git; \
-	cd nccl; \
-	make -j install; \
-	cd ..; \
-	rm -rf nccl; \
 	git clone -b ${CLONE_TAG} --depth 1 https://github.com/BVLC/caffe.git .; \
 	mkdir build; \
 	cd build; \
-	cmake -DUSE_CUDNN=1 -DUSE_NCCL=1 ..; \
+	cmake -DCPU_ONLY=1 ..; \
 	make all -j"$(nproc)"; \
 	make test; \
-	#make runtest; \
+	make runtest; \
 	make pycaffe; \
 	make install; \
 	cd ..; \
@@ -63,8 +58,8 @@ COPY ./ /workspace
 RUN set -eux; \
 	mkdir build; \
 	cd build; \
-	cmake ..; \
+	cmake .. -DCPU_ONLY=ON; \
 	make; \
-	./caffe-classifier deploy.prototxt bvlc_reference_caffenet.caffemodel imagenet_mean.binaryproto labels.txt hotdog.jpg;
+	./caffe-classifier deploy.prototxt bvlc_reference_caffenet.caffemodel imagenet_mean.binaryproto labels.txt hotdog.jpg;			
 
 CMD ["/bin/bash"]

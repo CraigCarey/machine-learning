@@ -1,12 +1,13 @@
 ## Build Docker Image
 ```bash
-docker build -t caffe-ex . -f docker/gpu/Dockerfile
-docker image ls
+docker build -t caffe-ex-gpu . -f docker/gpu/Dockerfile   # for CUDA GPU
+# or...
+docker build -t caffe-ex-cpu . -f docker/cpu/Dockerfile   # for CPU only
 ```
 
 ## Run Docker Container
 ```bash
-docker run -it caffe-ex
+docker run -it caffe-ex-gpu/cpu
 ```
 
 ## Run Caffe Classifier Example
