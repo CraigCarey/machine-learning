@@ -58,13 +58,6 @@ RUN set -eux; \
 	ldconfig;
 
 WORKDIR /workspace
-COPY ./ /workspace
-
-RUN set -eux; \
-	mkdir build; \
-	cd build; \
-	cmake ..; \
-	make; \
-	./caffe-classifier deploy.prototxt bvlc_reference_caffenet.caffemodel imagenet_mean.binaryproto labels.txt hotdog.jpg;
+COPY ./ .
 
 CMD ["/bin/bash"]

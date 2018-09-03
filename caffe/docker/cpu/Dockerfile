@@ -53,13 +53,13 @@ RUN set -eux; \
 	ldconfig;
 
 WORKDIR /workspace
-COPY ./ /workspace
+COPY ./ .
 
 RUN set -eux; \
 	mkdir build; \
 	cd build; \
 	cmake .. -DCPU_ONLY=ON; \
 	make; \
-	./caffe-classifier deploy.prototxt bvlc_reference_caffenet.caffemodel imagenet_mean.binaryproto labels.txt hotdog.jpg;			
+	./caffe-classifier deploy.prototxt bvlc_reference_caffenet.caffemodel imagenet_mean.binaryproto labels.txt hotdog.jpg;
 
 CMD ["/bin/bash"]
